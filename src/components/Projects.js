@@ -377,7 +377,7 @@ const projectsData = [
     description: "Restaurant menu UI + filtering + cart feature.",
     longDescription:
       "Dynamic food UI with filters, cart system, persistence, and smooth animations.",
-    liveUrl: "https://github.com/DeepaselvakumarM/FoodOrder.git",
+    liveUrl: "https://food-order-sable-nine.vercel.app/",
     githubUrl: "https://github.com/DeepaselvakumarM/FoodOrder.git",
     features: ["Menu Filter", "Cart System", "Local Storage"],
     type: "frontend",
