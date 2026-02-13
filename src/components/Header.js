@@ -307,7 +307,7 @@ const Header = () => {
     return () => observer.disconnect();
   }, []);
 
-  const navItems = ["About", "Skills", "Projects", "Internship", "Education", "Contact"];
+  const navItems = ["About", "Skills", "Projects", "Expierence", "Education", "Contact"];
 
   const handleNavClick = (item) => {
     const id = item.toLowerCase();
