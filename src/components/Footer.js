@@ -1,54 +1,47 @@
+import React from "react";
+import { Box, Container, IconButton, Stack, Typography } from "@mui/material";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
+import GitHubIcon from "@mui/icons-material/GitHub";
+import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
+import { colors, monoFont } from "../theme/theme";
+import { profile } from "../data/profile";
 
+const links = [
+  { label: "LinkedIn", href: profile.linkedin, icon: <LinkedInIcon fontSize="small" /> },
+  { label: "GitHub", href: profile.github, icon: <GitHubIcon fontSize="small" /> },
+  { label: "Email", href: `mailto:${profile.email}`, icon: <EmailOutlinedIcon fontSize="small" /> },
+];
 
-import React, { useEffect, useState } from "react";
-import { Box, Typography, Fade } from "@mui/material";
-
-const Footer = () => {
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    const section = document.getElementById("footer");
-    if (section) observer.observe(section);
-
-    return () => observer.disconnect();
-  }, []);
-
-  return (
-    <Box
-      id="footer"
-      sx={{
-        py: 3,
-        background: "linear-gradient(135deg, #1B3C53 0%, #234C6A 100%)",
-        color: "white",
-        textAlign: "center",
-        position: "relative",
-        "&::before": {
-          content: '""',
-          position: "absolute",
-          top: 0,
-          left: 0,
-          right: 0,
-          height: "2px",
-          background: "linear-gradient(90deg, transparent, #FFD700, transparent)",
-        }
-      }}
-    >
-      <Fade in={isVisible} timeout={1000}>
-        <Typography variant="body2">
-          © 2025 Deepa Selvakumar. All Rights Reserved.
+const Footer = () => (
+  <Box component="footer" sx={{ py: 4, backgroundColor: colors.bg, borderTop: `1px solid ${colors.border}` }}>
+    <Container maxWidth="lg">
+      <Stack
+        direction={{ xs: "column", sm: "row" }}
+        justifyContent="space-between"
+        alignItems="center"
+        spacing={2}
+      >
+        <Typography variant="body2" sx={{ color: colors.muted, fontFamily: monoFont, fontSize: 13 }}>
+          © {new Date().getFullYear()} {profile.name} · Built with React & MUI
         </Typography>
-      </Fade>
-    </Box>
-  );
-};
+        <Stack direction="row" spacing={0.5}>
+          {links.map((l) => (
+            <IconButton
+              key={l.label}
+              component="a"
+              href={l.href}
+              target={l.href.startsWith("http") ? "_blank" : undefined}
+              rel="noopener noreferrer"
+              aria-label={l.label}
+              sx={{ color: colors.muted, "&:hover": { color: colors.accent } }}
+            >
+              {l.icon}
+            </IconButton>
+          ))}
+        </Stack>
+      </Stack>
+    </Container>
+  </Box>
+);
 
 export default Footer;

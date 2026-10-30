@@ -1,453 +1,74 @@
-
-
-import React, { useEffect, useState } from "react";
-import { 
-  Box, 
-  Chip, 
-  Container, 
-  Typography, 
-  Card,
-  CardContent,
-  Grid,
-  Fade,
-  Slide,
-  Zoom,
-  useTheme,
-  useMediaQuery,
-  alpha,
-  Stack
-} from "@mui/material";
+import React from "react";
+import { Box, Chip, Stack, Typography } from "@mui/material";
+import { alpha } from "@mui/material/styles";
 import CodeIcon from "@mui/icons-material/Code";
-import BuildIcon from "@mui/icons-material/Build";
-import PsychologyIcon from "@mui/icons-material/Psychology";
-import TrendingUpIcon from "@mui/icons-material/TrendingUp";
+import WebIcon from "@mui/icons-material/Web";
+import DnsOutlinedIcon from "@mui/icons-material/DnsOutlined";
+import CloudOutlinedIcon from "@mui/icons-material/CloudOutlined";
+import StorageIcon from "@mui/icons-material/Storage";
+import { colors } from "../theme/theme";
+import { skills } from "../data/profile";
+import Section, { Reveal } from "./Section";
 
-const technicalSkills = [
-  "HTML", "CSS", "JavaScript", "React js", "Node js", "Type Script", "SQL", "Java", "Spring Boot", "Python", "Full Stack"
-];
-
-
-const frontendSkills = [
-  "HTML", "CSS", "JavaScript", "React.js", "TypeScript"
-];
-
-const backendSkills = [
-  "Node.js", "Express.js", "Java", "Spring Boot", "Python"
-];
-
-const databaseSkills = [
-  "SQL", "PostgreSQL", "MySQL", "MongoDB"
-];
-
-
-
-const tools = [
-  "VS Code", "Eclipse", "IntelliJ IDEA", "SQL Workbench", "GitHub", "Postman"
-];
-
-const interests = [
-  "Artificial Intelligence", "Development", "DevOps", "Latest Technologies"
-];
-
-const Skills = () => {
-  const [isVisible, setIsVisible] = useState(false);
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-
-  // Color palette
-  const colors = {
-    primary: "#1B3C53",
-    secondary: "#234C6A",
-    accent: "#2A5C8A",
-    lightBg: "#F8FAFC",
-    textPrimary: "#1A202C",
-    textSecondary: "#4A5568"
-  };
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.2 }
-    );
-
-    const section = document.getElementById("skills");
-    if (section) observer.observe(section);
-
-    return () => observer.disconnect();
-  }, []);
-
-  const SkillCategory = ({ title, skills, icon, delay, description }) => (
-    <Slide in={isVisible} direction="up" timeout={800 + delay}>
-      <Card
-        sx={{
-          height: "100%",
-          background: `linear-gradient(145deg, #ffffff 0%, ${colors.lightBg} 100%)`,
-          border: `1px solid ${alpha(colors.primary, 0.1)}`,
-          boxShadow: `
-            0 4px 24px ${alpha(colors.primary, 0.06)},
-            0 1px 4px ${alpha(colors.primary, 0.04)}
-          `,
-          borderRadius: 3,
-          transition: "all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-          position: "relative",
-          overflow: "hidden",
-          "&:hover": {
-            transform: "translateY(-8px)",
-            boxShadow: `
-              0 20px 40px ${alpha(colors.primary, 0.15)},
-              0 8px 20px ${alpha(colors.primary, 0.1)}
-            `,
-            border: `1px solid ${alpha(colors.primary, 0.2)}`,
-          },
-          "&::before": {
-            content: '""',
-            position: "absolute",
-            top: 0,
-            left: 0,
-            right: 0,
-            height: "4px",
-            background: `linear-gradient(90deg, ${colors.primary}, ${colors.secondary})`,
-            borderTopLeftRadius: 3,
-            borderTopRightRadius: 3,
-          }
-        }}
-      >
-        <CardContent sx={{ p: 4, height: "100%", display: "flex", flexDirection: "column" }}>
-          {/* Header Section */}
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "flex-start",
-              mb: 3,
-              gap: 2.5,
-            }}
-          >
-            <Box
-              sx={{
-                p: 2,
-                borderRadius: "12px",
-                background: `linear-gradient(135deg, ${alpha(colors.primary, 0.08)} 0%, ${alpha(colors.secondary, 0.08)} 100%)`,
-                color: colors.primary,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                flexShrink: 0,
-                transition: "all 0.3s ease",
-              }}
-            >
-              {icon}
-            </Box>
-            <Box>
-              <Typography
-                variant="h5"
-                sx={{
-                  fontWeight: "700",
-                  color: colors.primary,
-                  fontSize: "1.3rem",
-                  letterSpacing: "-0.01em",
-                  mb: 0.5,
-                }}
-              >
-                {title}
-              </Typography>
-              <Typography
-                variant="body2"
-                sx={{
-                  color: colors.textSecondary,
-                  lineHeight: 1.5,
-                  fontSize: "0.9rem",
-                }}
-              >
-                {description}
-              </Typography>
-            </Box>
-          </Box>
-
-          {/* Skills Grid */}
-          <Box sx={{ flexGrow: 1 }}>
-            <Box
-              sx={{
-                display: "flex",
-                flexWrap: "wrap",
-                gap: 1.5,
-                mt: 2,
-              }}
-            >
-              {skills.map((skill, index) => (
-                <Zoom
-                  key={skill}
-                  in={isVisible}
-                  timeout={1000 + index * 100}
-                  style={{ transitionDelay: isVisible ? `${index * 100}ms` : "0ms" }}
-                >
-                  <Chip
-                    label={skill}
-                    variant="filled"
-                    sx={{
-                      background: `linear-gradient(135deg, ${alpha(colors.primary, 0.06)} 0%, ${alpha(colors.secondary, 0.06)} 100%)`,
-                      color: colors.primary,
-                      fontWeight: "600",
-                      fontSize: "0.82rem",
-                      height: 34,
-                      borderRadius: "10px",
-                      border: `1px solid ${alpha(colors.primary, 0.12)}`,
-                      transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-                      "&:hover": {
-                        background: `linear-gradient(135deg, ${alpha(colors.primary, 0.12)} 0%, ${alpha(colors.secondary, 0.12)} 100%)`,
-                        border: `1px solid ${alpha(colors.primary, 0.2)}`,
-                        transform: "translateY(-2px)",
-                        boxShadow: `0 4px 12px ${alpha(colors.primary, 0.15)}`,
-                        color: colors.secondary,
-                      },
-                      "& .MuiChip-label": {
-                        px: 2,
-                        py: 0.5,
-                      },
-                    }}
-                  />
-                </Zoom>
-              ))}
-            </Box>
-          </Box>
-        </CardContent>
-      </Card>
-    </Slide>
-  );
-
-  return (
-    <Box
-      id="skills"
-      sx={{
-        py: { xs: 8, md: 12 },
-        background: `linear-gradient(135deg, ${colors.lightBg} 0%, #ffffff 100%)`,
-        position: "relative",
-        overflow: "hidden",
-      }}
-    >
-      <Container maxWidth="lg">
-        {/* Section Header */}
-        <Fade in={isVisible} timeout={800}>
-          <Box sx={{ textAlign: "center", mb: { xs: 6, md: 10 } }}>
-            <Typography
-              variant="h3"
-              component="h2"
-              sx={{
-                fontWeight: "800",
-                color: colors.primary,
-                fontSize: { xs: "2.25rem", md: "3rem" },
-                mb: 2,
-                letterSpacing: "-0.02em",
-                lineHeight: 1.1,
-              }}
-            >
-              Skills & Expertise
-            </Typography>
-            <Typography
-              variant="h6"
-              sx={{
-                color: colors.textSecondary,
-                maxWidth: 600,
-                mx: "auto",
-                lineHeight: 1.7,
-                fontSize: { xs: "1.05rem", md: "1.15rem" },
-                fontWeight: "400",
-              }}
-            >
-              A comprehensive showcase of my technical capabilities and areas of specialization
-            </Typography>
-          </Box>
-        </Fade>
-
-        {/* Skills Cards Grid */}
-        <Grid container spacing={3}>
-        
-          <Grid item xs={12} md={4}>
-            <SkillCategory
-              title="Technical Skills"
-              skills={technicalSkills}
-              icon={<CodeIcon sx={{ fontSize: 26 }} />}
-              delay={0}
-              description="Core programming languages and frameworks I specialize in"
-            />
-          </Grid>
-
-{/* <Grid container spacing={3}> */}
-
-  {/* Frontend Skills */}
-  {/* <Grid item xs={12} md={4}>
-    <SkillCategory
-      title="Frontend"
-      skills={frontendSkills}
-      icon={<CodeIcon sx={{ fontSize: 26 }} />}
-      delay={0}
-      description="Technologies I use to build user interfaces"
-    />
-  </Grid>
-
-
-  <Grid item xs={12} md={4}>
-    <SkillCategory
-      title="Backend"
-      skills={backendSkills}
-      icon={<BuildIcon sx={{ fontSize: 26 }} />}
-      delay={200}
-      description="Server-side development and API building"
-    />
-  </Grid>
-
-
-  <Grid item xs={12} md={4}>
-    <SkillCategory
-      title="Database"
-      skills={databaseSkills}
-      icon={<PsychologyIcon sx={{ fontSize: 26 }} />}
-      delay={400}
-      description="Database technologies used in my applications"
-    />
-  </Grid> */}
-
-{/* </Grid> */}
-
-
-
-
-          {/* Tools & Technologies Card */}
-          <Grid item xs={12} md={4}>
-            <SkillCategory
-              title="Tools & Technologies"
-              skills={tools}
-              icon={<BuildIcon sx={{ fontSize: 26 }} />}
-              delay={200}
-              description="Development tools and platforms I use daily"
-            />
-          </Grid>
-
-          {/* Areas of Interest Card */}
-          <Grid item xs={12} md={4}>
-            <SkillCategory
-              title="Areas of Interest"
-              skills={interests}
-              icon={<PsychologyIcon sx={{ fontSize: 26 }} />}
-              delay={400}
-              description="Emerging technologies and fields I'm passionate about"
-            />
-          </Grid>
-        </Grid>
-
-        {/* Bottom Stats Card */}
-        {/* <Fade in={isVisible} timeout={1600}>
-          <Card
-            sx={{
-              mt: 8,
-              p: { xs: 3, md: 4 },
-              background: `linear-gradient(135deg, ${alpha(colors.primary, 0.02)} 0%, ${alpha(colors.secondary, 0.02)} 100%)`,
-              border: `1px solid ${alpha(colors.primary, 0.1)}`,
-              borderRadius: 3,
-              boxShadow: `0 8px 32px ${alpha(colors.primary, 0.08)}`,
-              position: "relative",
-              overflow: "hidden",
-              "&::before": {
-                content: '""',
-                position: "absolute",
-                top: 0,
-                left: 0,
-                right: 0,
-                height: "3px",
-                background: `linear-gradient(90deg, ${colors.primary}, ${colors.secondary})`,
-              }
-            }}
-          >
-            <Grid container spacing={3} alignItems="center">
-              <Grid item xs={12} md={8}>
-                <Typography
-                  variant="h5"
-                  sx={{
-                    fontWeight: "700",
-                    color: colors.primary,
-                    mb: 2,
-                    fontSize: { xs: "1.4rem", md: "1.5rem" },
-                  }}
-                >
-                  Continuous Learning Journey
-                </Typography>
-                <Typography
-                  variant="body1"
-                  sx={{
-                    color: colors.textSecondary,
-                    lineHeight: 1.7,
-                    fontSize: "1.05rem",
-                  }}
-                >
-                  Dedicated to continuous improvement and staying updated with the latest 
-                  technologies through hands-on projects, courses, and industry best practices.
-                </Typography>
-              </Grid>
-              <Grid item xs={12} md={4}>
-                <Box
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: { xs: "flex-start", md: "center" },
-                    gap: 2,
-                  }}
-                >
-                 
-                </Box>
-              </Grid>
-            </Grid>
-          </Card>
-        </Fade> */}
-
-        {/* Enhanced Decorative Elements */}
-        <Box
-          sx={{
-            position: "absolute",
-            top: "10%",
-            right: "5%",
-            width: 120,
-            height: 120,
-            background: `linear-gradient(135deg, ${alpha(colors.primary, 0.03)} 0%, ${alpha(colors.secondary, 0.03)} 100%)`,
-            borderRadius: "50%",
-            animation: "float 8s ease-in-out infinite",
-            display: { xs: "none", xl: "block" },
-            border: `1px solid ${alpha(colors.primary, 0.05)}`,
-          }}
-        />
-        <Box
-          sx={{
-            position: "absolute",
-            bottom: "15%",
-            left: "3%",
-            width: 80,
-            height: 80,
-            background: `linear-gradient(135deg, ${alpha(colors.secondary, 0.02)} 0%, ${alpha(colors.primary, 0.02)} 100%)`,
-            borderRadius: "30% 70% 70% 30% / 30% 30% 70% 70%",
-            animation: "float 6s ease-in-out infinite 1s",
-            display: { xs: "none", xl: "block" },
-            border: `1px solid ${alpha(colors.primary, 0.04)}`,
-          }}
-        />
-      </Container>
-
-      {/* Enhanced CSS Animation */}
-      <style jsx>{`
-        @keyframes float {
-          0%, 100% { 
-            transform: translateY(0px) rotate(0deg); 
-          }
-          50% { 
-            transform: translateY(-15px) rotate(180deg); 
-          }
-        }
-      `}</style>
-    </Box>
-  );
+const icons = {
+  Languages: <CodeIcon />,
+  Frontend: <WebIcon />,
+  Backend: <DnsOutlinedIcon />,
+  "Cloud & Tools": <CloudOutlinedIcon />,
+  Databases: <StorageIcon />,
 };
 
+const Skills = () => (
+  <Section id="skills" index="02" eyebrow="skills" title="Tech Stack" alt>
+    <Box
+      sx={{
+        display: "grid",
+        gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr", md: "repeat(3, 1fr)" },
+        gap: 2.5,
+      }}
+    >
+      {skills.map((s, i) => (
+        <Reveal key={s.group} delay={i * 80} sx={{ gridColumn: { md: s.group === "Cloud & Tools" ? "span 2" : "auto" } }}>
+          <Box
+            sx={{
+              height: "100%",
+              p: 3,
+              borderRadius: 3,
+              backgroundColor: colors.surface,
+              border: `1px solid ${colors.border}`,
+              transition: "border-color 0.2s ease, box-shadow 0.2s ease",
+              "&:hover": {
+                borderColor: alpha(colors.accent, 0.6),
+                boxShadow: `0 12px 40px ${alpha(colors.accent, 0.08)}`,
+              },
+            }}
+          >
+            <Stack direction="row" alignItems="center" spacing={1.5} sx={{ mb: 2.5 }}>
+              <Box
+                sx={{
+                  width: 40,
+                  height: 40,
+                  borderRadius: 2,
+                  display: "grid",
+                  placeItems: "center",
+                  color: colors.accent,
+                  backgroundColor: alpha(colors.accent, 0.1),
+                }}
+              >
+                {icons[s.group]}
+              </Box>
+              <Typography variant="h6">{s.group}</Typography>
+            </Stack>
+            <Stack direction="row" flexWrap="wrap" useFlexGap spacing={1}>
+              {s.items.map((item) => (
+                <Chip key={item} label={item} />
+              ))}
+            </Stack>
+          </Box>
+        </Reveal>
+      ))}
+    </Box>
+  </Section>
+);
+
 export default Skills;
-
-
